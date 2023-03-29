@@ -1,20 +1,19 @@
 import { Card, Container, Col, Row, Stack } from 'react-bootstrap';
 import { useExpense } from '../contexts/FinanceContext';
+import { currencyFormatter } from "../utils"
 
 export default function TotalsCard() {
 
-    const { expenses } = useExpense();
+    const { expenses, incomes } = useExpense();
 
 
-    const expensesArray = expenses.filter(expense => expense.type == 'expense');
-    const totalExpenses = expensesArray.reduce(function (sum, number) {
+    const totalExpenses = expenses.reduce(function (sum, number) {
         const updatedSum = sum + number.amount;
         return updatedSum;
     }, 0);
 
 
-    const incomesArray = expenses.filter(expense => expense.type == 'income');
-    const totalIncomes = incomesArray.reduce(function (sum, number) {
+    const totalIncomes = incomes.reduce(function (sum, number) {
         const updatedSum = sum + number.amount;
         return updatedSum;
     }, 0);
@@ -25,6 +24,9 @@ export default function TotalsCard() {
         <>
             <Container>
                 <Row>
+                    <h2 className='mb-5'>Monthly Summary</h2>
+                </Row>
+                <Row>
                     <Col>
                         <Card>
                             <Card.Title className="d-flex justify-content-center align-items-baseline fw-normal mb-3">
@@ -32,11 +34,10 @@ export default function TotalsCard() {
                             </Card.Title>
                             <Card.Body>
                                 <Stack direction='horizontal' gap="2">
-                                    <p>Number of transactions: <span>{expensesArray.length}</span></p>
+                                    <p>Number of transactions: <span>{expenses.length}</span></p>
                                 </Stack>
                                 <Stack direction='horizontal' gap="2">
-                                    <p>Total amount: <span>
-                                        {totalExpenses}</span></p>
+                                    <p>Total amount: <span> {currencyFormatter.format(totalExpenses)}</span></p>
                                 </Stack>
                             </Card.Body>
                         </Card>
@@ -50,11 +51,11 @@ export default function TotalsCard() {
                             </Card.Title>
                             <Card.Body>
                                 <Stack direction='horizontal' gap="2">
-                                    <p>Number of transactions: <span>{incomesArray.length}</span></p>
+                                    <p>Number of transactions: <span>{incomes.length}</span></p>
                                 </Stack>
                                 <Stack direction='horizontal' gap="2">
                                     <p>Total amount: <span>
-                                        {totalIncomes}</span></p>
+                                    {currencyFormatter.format(totalIncomes)}</span></p>
                                 </Stack>
                             </Card.Body>
                         </Card>
@@ -66,11 +67,16 @@ export default function TotalsCard() {
                             </Card.Title>
                             <Card.Body>
                                 <Stack direction='horizontal' gap="2">
-                                    <p>Number of transactions: <span>{expenses.length}</span></p>
+                                    <p>Number of transactions: <span>{expenses.length + incomes.length}</span></p>
                                 </Stack>
-                                <Stack direction='horizontal' gap="2">
-                                    <p>Total amount: <span>
-                                        {totalBalance}</span></p>
+                                <Stack direction='horizontal' className="d-flex align-items-baseline justify-content-between">
+                                    <p>Total Income: </p><span>{currencyFormatter.format(totalIncomes)}</span>
+                                </Stack>
+                                <Stack direction='horizontal' className="d-flex align-items-baseline justify-content-between border-bottom">
+                                    <p>Total Expenses: </p><span>{currencyFormatter.format(totalExpenses)}</span>
+                                </Stack>
+                                <Stack direction='horizontal' className="d-flex align-items-baseline justify-content-between">
+                                    <p>Total amount: </p><span>{currencyFormatter.format(totalBalance)}</span>
                                 </Stack>
                             </Card.Body>
                         </Card>

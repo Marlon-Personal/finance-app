@@ -1,24 +1,16 @@
-import { useState } from 'react';
+
 import { Table } from 'react-bootstrap';
-import Select from 'react-select';
 import { useExpense } from '../contexts/FinanceContext';
 
 export default function ExpenseCard() {
 
-    const [typeRef, setTypeRef] = useState('all');
 
     const { expenses } = useExpense();
 
-    const options = [
-        { value: 'income', label: 'Income' },
-        { value: 'expense', label: 'Expense' },
-        { value: 'all', label: 'All transactions' }
-    ]
 
     return (
         <>
             <h2>List of transactions</h2>
-            <Select onChange={e => setTypeRef(e.value)} options={options} />
             <Table striped bordered hover>
                 <thead>
                     <tr>
