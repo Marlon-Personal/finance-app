@@ -11,7 +11,9 @@ export default function AddExpense() {
 
     const { addExpense, options } = useExpense();
 
-    function newIncomeSubmit(e) {
+    function newExpenseSubmit(e) {
+
+
         e.preventDefault();
         addExpense({
             name: nameRef.current.value,
@@ -24,7 +26,7 @@ export default function AddExpense() {
     return (
         <>
         <h2>Add an expense</h2>
-        <Form onSubmit={newIncomeSubmit}>
+        <Form onSubmit={newExpenseSubmit}>
         <Form.Group className="mb-3" controlId="name">
             <Form.Label>Name of the expense</Form.Label>
             <Form.Control ref={nameRef} type="text" required />
