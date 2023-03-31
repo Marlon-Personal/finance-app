@@ -1,13 +1,20 @@
 import { useExpense } from '../contexts/FinanceContext';
-import { useRef } from 'react';
+import { useRef, useState } from 'react';
 import Select from 'react-select';
 import { Form, Button } from 'react-bootstrap';
+import { Container } from 'react-bootstrap';
 
 export default function AddExpense() {
     const amountRef = useRef();
     const nameRef = useRef();
     const dateRef = useRef();
     const typeRef = useRef();
+
+    const [openForm, setOpenForm] = useState(false);
+
+    const openFormToggle = () => {
+        setOpenForm(!openForm);
+    };
 
     const { addExpense, options } = useExpense();
 
@@ -25,6 +32,8 @@ export default function AddExpense() {
 
     return (
         <>
+              <Button onClick={openFormToggle}>Dropdown</Button>
+      {openForm ? <Container>
         <h2>Add an expense</h2>
         <Form onSubmit={newExpenseSubmit}>
         <Form.Group className="mb-3" controlId="name">
@@ -55,6 +64,7 @@ export default function AddExpense() {
             </Button>
           </div>
         </Form>
+        </Container>: null }
         </>
        
     )
