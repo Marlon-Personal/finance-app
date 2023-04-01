@@ -1,5 +1,5 @@
 
-import { Table } from 'react-bootstrap';
+import { Container, Table } from 'react-bootstrap';
 import { useExpense } from '../contexts/FinanceContext';
 import { currencyFormatter } from "../utils"
 
@@ -10,9 +10,10 @@ export default function IncomeList() {
 
     return (
         <>
-            <h2>List of incomes</h2>
-            <Table striped bordered hover>
-                <thead>
+        <Container className='d-flex justify-content-center flex-column align-items-center'>
+            <h2 className='text-center border-bottom w-25 border-dark text-uppercase mb-4'>List of incomes</h2>
+            <Table striped borderless hover size='sm'>
+                <thead className='bg-black text-white'>
                     <tr>
                         <th>#</th>
                         <th>Transaction name</th>
@@ -37,6 +38,7 @@ export default function IncomeList() {
                     }
                 </tbody>
             </Table>
+            </Container>
         </>
     )
 }
